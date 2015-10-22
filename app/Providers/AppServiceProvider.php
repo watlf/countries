@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use Whoops\Run;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 
     /**
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if (App::isLocal()) {
+            $whoops = new Run;
+            $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+            $whoops->register();
+        }
     }
 }
